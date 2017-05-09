@@ -1,0 +1,21 @@
+//
+//  KPBLEDemo-prefix.pch
+//  KPBLEDemo
+//
+//  Created by CPX on 08/05/2017.
+//  Copyright © 2017 KaoPuJinFu. All rights reserved.
+//
+
+/* !!! 不要往这个文件里加东西 !!! */
+/* !!! 不要往这个文件里加东西 !!! */
+/* !!! 不要往这个文件里加东西 !!! */
+
+#ifndef KPBLEDemo_prefix_pch
+#define KPBLEDemo_prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "KPBLEDemoGlobal.h"
+
+#endif /* KPBLEDemo_prefix_pch */
