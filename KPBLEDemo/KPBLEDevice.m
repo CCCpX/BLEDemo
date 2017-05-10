@@ -7,6 +7,8 @@
 //
 
 #import "KPBLEDevice.h"
+#import "KPGattSerialProfile.h"
+#import "KPPeripheralProtocol.h"
 
 @implementation KPBLEDevice
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral {
@@ -24,53 +26,80 @@
 
 #pragma mark - CBPeripheralDelegate
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
-    if (!error) {
-        if (peripheral.services) {
-            for (CBService *service in peripheral.services) {
-                KPLog(@"发现service: %@",service);
-                [_peripheral discoverCharacteristics:nil forService:service];
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didDiscoverServices:)]) {
+                [profile peripheral:peripheral didDiscoverServices:error];
             }
-        } else {
-            KPLog(@"%@: 未找到对应的service",self.class.description);
         }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
-    for (CBCharacteristic *characteristic in service.characteristics) {
-        KPLog(@"发现characteristic: %@",characteristic);
-        KPLog(@"读取characteristic的value");
-        [peripheral readValueForCharacteristic:characteristic];
-        // 设置通知
-        [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didDiscoverCharacteristicsForService:error:)]) {
+                [profile peripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
+            }
+        }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-    NSData *data = characteristic.value;
-    Byte *resultByte = (Byte *)[data bytes];
-    
-    KPLog(@"获取byte:%s",resultByte);
-    
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didUpdateValueForCharacteristic:error:)]) {
+                [profile peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+            }
+        }
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-    if (!error) {
-        KPLog(@"通知获取characteristic: %@",characteristic);
-        [peripheral readValueForCharacteristic:characteristic];
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didUpdateNotificationStateForCharacteristic:error:)]) {
+                [profile peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+            }
+        }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForDescriptor:(CBDescriptor *)descriptor error:(NSError *)error {
-    if (!error) {
-        
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didWriteValueForDescriptor:error:)]) {
+                [profile peripheral:peripheral didWriteValueForDescriptor:descriptor error:error];
+            }
+        }
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didWriteValueForCharacteristic:error:)]) {
+                [profile peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+            }
+        }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(NSNumber *)RSSI error:(NSError *)error {
-    if (!error) {
-        _RSSI = RSSI;
+    for (id<KPPeripheralProtocol> profile in _profiles) {
+        if (profile) {
+            if ([profile respondsToSelector:@selector(peripheral:didReadRSSI:error:)]) {
+                [profile peripheral:peripheral didReadRSSI:RSSI error:error];
+            }
+        }
     }
+    _RSSI = RSSI;
+    [self rssiDidUpdateWithError:error];
+}
+
+#pragma mark "Virtual" Methods
+- (void)rssiDidUpdateWithError:(NSError *)error {
+    
 }
 
 @end

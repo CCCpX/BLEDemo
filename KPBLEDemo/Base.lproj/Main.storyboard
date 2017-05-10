@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -83,11 +84,18 @@
                                 <action selector="disconnectPeripheralAction:" destination="BYZ-38-t0r" id="LZy-J6-srp"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="搜索设备" id="lRJ-Zp-j27">
-                            <connections>
-                                <action selector="searchPeripheralAction:" destination="BYZ-38-t0r" id="WRZ-aH-XSj"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="搜索设备" id="lRJ-Zp-j27">
+                                <connections>
+                                    <action selector="searchPeripheralAction:" destination="BYZ-38-t0r" id="WRZ-aH-XSj"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="发送数据" id="whf-I9-YDM">
+                                <connections>
+                                    <action selector="sendDataAction:" destination="BYZ-38-t0r" id="P4F-HD-SAY"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="nVD-KO-YC0" id="fTr-0x-MBo"/>

@@ -10,12 +10,15 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "KPBTHelper.h"
 #import "KPHandheldDevice+Protected.h"
+#import "KPGattSerialProfile.h"
 
 @interface KPHandheldManager ()<CBCentralManagerDelegate>
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) NSDate *lastScanDate;
 @property (nonatomic, strong) NSMutableDictionary *connectRecords;
 @end
+
+#define kServiceUUID @"74278BDA-B644-4520-8F0C-720EAF059935" //服务的UUID
 
 @implementation KPHandheldManager
 
@@ -51,9 +54,8 @@
         if (error) { *error = [KPBTHelper basicError:@"Bluetooth is not on" domain:NSStringFromClass([self class]) code:DeviceError_BluetoothNotOn]; return; }
     }
     
-#warning 此处的UUID需要确认
     // 1. 取回已知的外围设备(曾经被发现或连接过)
-    NSArray *knownPeripherals = [self.centralManager retrievePeripheralsWithIdentifiers:[NSArray arrayWithObjects:[CBUUID UUIDWithString:@"74278BDA-B644-4520-8F0C-720EAF059935"], nil]];
+    NSArray *knownPeripherals = [self.centralManager retrievePeripheralsWithIdentifiers:[NSArray arrayWithObjects:[CBUUID UUIDWithString:kServiceUUID], nil]];
     for (CBPeripheral *peripheral in knownPeripherals) {
         KPHandheldDevice *handheld;
         if ((handheld = [self.connectRecords objectForKey:peripheral.identifier])) {
@@ -70,7 +72,7 @@
         }
     }
     // 2. 取回已经被连接的外围设备(同一部手机上的其他App)
-    NSArray *conectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:[NSArray arrayWithObjects:[CBUUID UUIDWithString:@"74278BDA-B644-4520-8F0C-720EAF059935"], nil]];
+    NSArray *conectedPeripherals = [self.centralManager retrieveConnectedPeripheralsWithServices:[NSArray arrayWithObjects:[CBUUID UUIDWithString:kServiceUUID], nil]];
     for (CBPeripheral *peripheral in conectedPeripherals) {
         KPHandheldDevice *handheld;
         // 如果连接记录里已经有此设备, 就直接调用self的didDiscover代理
@@ -89,7 +91,8 @@
     }
     KPLog(@"开始扫描...");
     // 3. 扫描周边所有的设备
-    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+    NSArray *services = [NSArray arrayWithObjects:[CBUUID UUIDWithString:GLOBAL_SERIAL_PASS_SERVICE_UUID], nil];
+    [self.centralManager scanForPeripheralsWithServices:services options:0];
 }
 
 - (void)stopScan_error:(NSError *__autoreleasing *)error {
@@ -117,7 +120,6 @@
     // 标记设备为正在连接中...
     device.state = DeviceState_AttemptingConnection;
     // 尝试连接设备
-#warning 连接需要添加计时器, 手动超时
     [self.centralManager connectPeripheral:device.peripheral options:nil];
 }
 
@@ -150,7 +152,6 @@
     }
 }
 
-
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     if (self.delegate && [self.delegate respondsToSelector:@selector(handheldManagerDidUpdateState:)]) {
@@ -167,7 +168,6 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
-    KPLog(@"已发现设备:%@",peripheral);
     KPHandheldDevice *device = [self getDeviceFromCBPerpheral:peripheral advertisementData:advertisementData RSSI:RSSI];
     if (device) {
         // 通知我们的代理已发现设备
@@ -179,8 +179,9 @@
     KPLog(@"已连接设备:%@",peripheral);
     KPHandheldDevice *device = [self.connectRecords objectForKey:peripheral.identifier];
     if (!device) { return; }
-    // 标记设备状态为正在连接验证
-    device.state = DeviceState_AttemptingValidation;
+    // 标记设备状态为已连接
+    device.state = DeviceState_ConnectedAndValidated;
+    [self notifyDelegateOfConnectHandheld:device error:nil];
     // 验证已连接的设备
     [device interrogateAndValidate];
 }
@@ -193,6 +194,7 @@
     KPHandheldDevice *device = [self.connectRecords objectForKey:peripheral.identifier];
     if (!device || error) { return; }
     device.state = DeviceState_Discovered;
+    KPLog(@"成功断开连接");
     [self notifyDelegateOfDisconnectHandheld:device error:error];
 }
 
@@ -216,21 +218,23 @@
 }
 
 // 从delegate返回的数据配置`KPHandleheldDevice`
-- (KPHandheldDevice *)getDeviceFromCBPerpheral:(CBPeripheral *)perpheral advertisementData:(NSDictionary <NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
+- (KPHandheldDevice *)getDeviceFromCBPerpheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary <NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
     KPHandheldDevice *device;
     // 已经被发现的设备, 准备连接
-    if ((device = [self.connectRecords objectForKey:perpheral.identifier])) {
+    if ((device = [self.connectRecords objectForKey:peripheral.identifier])) {
+        KPLog(@"发现连接过的设备:%@",peripheral.identifier);
         device.lastDiscovered = [NSDate date];
         device.RSSI = RSSI;
         device.advertisementData = advertisementData;
     } else {
         // 之前未被发现的新设备
-        device = [[KPHandheldDevice alloc] initWithPeripheral:perpheral];
+        KPLog(@"发现新设备:%@",peripheral.identifier);
+        device = [[KPHandheldDevice alloc] initWithPeripheral:peripheral];
         device.RSSI = RSSI;
         device.lastDiscovered = [NSDate date];
         device.advertisementData = advertisementData;
         device.state = DeviceState_Discovered;
-        [self.connectRecords setObject:device forKey:perpheral.identifier];
+        [self.connectRecords setObject:device forKey:peripheral.identifier];
     }
     return device;
 }

@@ -17,6 +17,7 @@
 		096937191EC05C29002304BA /* KPBTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 096937181EC05C29002304BA /* KPBTHelper.m */; };
 		0969371C1EC05DDF002304BA /* KPBLEDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0969371B1EC05DDF002304BA /* KPBLEDevice.m */; };
 		0969371F1EC06B8C002304BA /* KPHandheldDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0969371E1EC06B8C002304BA /* KPHandheldDevice.m */; };
+		096937291EC2EB6D002304BA /* KPGattSerialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 096937281EC2EB6D002304BA /* KPGattSerialProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,9 @@
 		096937201EC082AE002304BA /* KPBLEDemo-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KPBLEDemo-prefix.pch"; sourceTree = "<group>"; };
 		096937221EC08484002304BA /* KPBLEDemoGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBLEDemoGlobal.h; sourceTree = "<group>"; };
 		096937241EC160D0002304BA /* KPHandheldDevice+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KPHandheldDevice+Protected.h"; sourceTree = "<group>"; };
+		096937271EC2EB6D002304BA /* KPGattSerialProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGattSerialProfile.h; sourceTree = "<group>"; };
+		096937281EC2EB6D002304BA /* KPGattSerialProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGattSerialProfile.m; sourceTree = "<group>"; };
+		0969372B1EC2F330002304BA /* KPPeripheralProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPPeripheralProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,9 @@
 				096937141EC05310002304BA /* KPHandheldManager.h */,
 				096937151EC05310002304BA /* KPHandheldManager.m */,
 				096937241EC160D0002304BA /* KPHandheldDevice+Protected.h */,
+				0969372B1EC2F330002304BA /* KPPeripheralProtocol.h */,
+				096937271EC2EB6D002304BA /* KPGattSerialProfile.h */,
+				096937281EC2EB6D002304BA /* KPGattSerialProfile.m */,
 				0969371D1EC06B8C002304BA /* KPHandheldDevice.h */,
 				0969371E1EC06B8C002304BA /* KPHandheldDevice.m */,
 				0969371A1EC05DDF002304BA /* KPBLEDevice.h */,
@@ -189,6 +196,7 @@
 				096937161EC05310002304BA /* KPHandheldManager.m in Sources */,
 				096937041EC028AB002304BA /* ViewController.m in Sources */,
 				096937011EC028AB002304BA /* AppDelegate.m in Sources */,
+				096937291EC2EB6D002304BA /* KPGattSerialProfile.m in Sources */,
 				0969371F1EC06B8C002304BA /* KPHandheldDevice.m in Sources */,
 				0969371C1EC05DDF002304BA /* KPBLEDevice.m in Sources */,
 				096936FE1EC028AB002304BA /* main.m in Sources */,

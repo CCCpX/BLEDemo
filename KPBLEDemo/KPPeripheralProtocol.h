@@ -5,9 +5,10 @@
 //  Created by CPX on 10/05/2017.
 //  Copyright © 2017 KaoPuJinFu. All rights reserved.
 //
+#import <Foundation/Foundation.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
-#ifndef KPPeripheralProtocol_h
-#define KPPeripheralProtocol_h
+@protocol KPPeripheralProtocol <CBPeripheralDelegate>
 
+@end
 
-#endif /* KPPeripheralProtocol_h */

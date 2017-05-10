@@ -59,7 +59,10 @@ typedef NS_ENUM(NSInteger, KPHandheldDeviceState) {
     DeviceState_DisConnected
 };
 
+@protocol KPHandheldDeviceDelegate;
 @interface KPHandheldDevice : KPBLEDevice
+
+@property (nonatomic, weak) id<KPHandheldDeviceDelegate> delegate;
 
 @property (nonatomic, readonly) NSUUID *identifier;
 @property (nonatomic, readonly) NSString *name;
@@ -68,4 +71,11 @@ typedef NS_ENUM(NSInteger, KPHandheldDeviceState) {
 @property (nonatomic, readonly) NSDictionary *advertisementData;
 @property (nonatomic, readonly) NSNumber *RSSI;
 
+- (void)sendSerialData:(NSData *)data;
+
+@end
+
+@protocol KPHandheldDeviceDelegate <NSObject>
+- (void)handheld:(KPHandheldDevice *)device receiveSerialData:(NSData *)data;
+- (void)handheldDidUpdateRSSI:(KPHandheldDevice *)device error:(NSError *)error;
 @end

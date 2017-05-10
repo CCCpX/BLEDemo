@@ -10,10 +10,11 @@
 #import "KPHandheldManager.h"
 #import "KPHandheldDevice.h"
 
-@interface ViewController ()<KPHandheldManagerDelegate,UITableViewDelegate, UITableViewDataSource>
+@interface ViewController ()<KPHandheldManagerDelegate, KPHandheldDeviceDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, strong) KPHandheldManager *handheldManager;
+@property (nonatomic, strong) KPHandheldDevice *handheldDevice;
 @property (nonatomic, strong) NSMutableArray<KPHandheldDevice *> *foundDevices;
 @end
 
@@ -41,6 +42,12 @@ static NSString * const cellReuseIdentifier = @"cellReuseIdentifier";
         return;
     }
 }
+- (IBAction)sendDataAction:(UIBarButtonItem *)sender {
+    NSString *dataString = @"S04;00000000;067;E04;";
+    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    [self.handheldDevice sendSerialData:data];
+}
+
 - (IBAction)disconnectPeripheralAction:(UIBarButtonItem *)sender {
     NSError *error;
     [self.handheldManager disconnectFromAllHandheld:&error];
@@ -55,18 +62,22 @@ static NSString * const cellReuseIdentifier = @"cellReuseIdentifier";
 - (void)handheldManagerDidUpdateState:(KPHandheldManager *)hhManager {
     [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
 }
-
 - (void)handheldManager:(KPHandheldManager *)hhManager didDiscoverHandheld:(KPHandheldDevice *)handheld error:(NSError*)error{
-    [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
+//    [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
     [self.foundDevices addObject:handheld];
     [self.tableView reloadData];
 }
-
 - (void)handheldManager:(KPHandheldManager *)hhManager didConnectHandheld:(KPHandheldDevice *)handheld error:(NSError *)error {
+    self.handheldDevice = handheld;
     [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
 }
 - (void)handheldManager:(KPHandheldManager *)hhManager didDisconnectHandheld:(KPHandheldDevice *)handheld error:(NSError *)error {
     [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
+}
+
+#pragma mark - KPHandheldDeviceDelegate
+- (void)handheld:(KPHandheldDevice *)device receiveSerialData:(NSData *)data {
+    KPLog(@"接收到数据:%@",data);
 }
 
 - (void)writeToLog:(NSString *)log {
