@@ -14,7 +14,7 @@
     NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
     [errorDetail setValue:description forKey:NSLocalizedDescriptionKey];
     NSError *error = [NSError errorWithDomain:domain code:code userInfo:errorDetail];
-    KPLog(@"Error: %@ %@", error, [error userInfo]);
+//    KPLog(@"Error: %@ %@", error, [error userInfo]);
     return error;
 }
 

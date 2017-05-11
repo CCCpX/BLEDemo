@@ -11,7 +11,7 @@
 
 @protocol KPHandheldManagerDelegate;
 @interface KPHandheldManager : NSObject
-/// 主设备对象的代理, (CoreBluetooth严重依赖回调模式)
+/// 主设备对象的代理
 @property (nonatomic, weak) id<KPHandheldManagerDelegate> delegate;
 /// 初始化主设备对象并返回
 - (instancetype)initWithDelegate:(id<KPHandheldManagerDelegate>)delegate;

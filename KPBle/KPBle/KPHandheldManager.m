@@ -89,9 +89,9 @@
             }
         }
     }
-    KPLog(@"开始扫描...");
+//    KPLog(@"开始扫描...");
     // 3. 扫描周边所有的设备
-    NSArray *services = [NSArray arrayWithObjects:[CBUUID UUIDWithString:GLOBAL_SERIAL_PASS_SERVICE_UUID], nil];
+    NSArray *services = [NSArray arrayWithObjects:[CBUUID UUIDWithString:GLOBAL_SERIAL_SERVICE_UUID], nil];
     [self.centralManager scanForPeripheralsWithServices:services options:0];
 }
 
@@ -103,7 +103,7 @@
     // 清除过时的连接记录
     [self removeStaleDevice:self.lastScanDate];
     [self.centralManager stopScan];
-    KPLog(@"停止扫描.");
+//    KPLog(@"停止扫描.");
 }
 
 - (void)connectToHandheld:(KPHandheldDevice *)device_ error:(NSError *__autoreleasing *)error {
@@ -159,10 +159,10 @@
     }
     switch (central.state) {
         case CBManagerStatePoweredOn:
-            KPLog(@"%@: Bluetooth ON", self.class.description);
+//            KPLog(@"%@: Bluetooth ON", self.class.description);
             break;
         default:
-            KPLog(@"%@: Bluetooth state error: %@",self.class.description, @(central.state));
+//            KPLog(@"%@: Bluetooth state error: %@",self.class.description, @(central.state));
             break;
     }
 }
@@ -176,7 +176,7 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-    KPLog(@"已连接设备:%@",peripheral);
+//    KPLog(@"已连接设备:%@",peripheral);
     KPHandheldDevice *device = [self.connectRecords objectForKey:peripheral.identifier];
     if (!device) { return; }
     // 标记设备状态为已连接
@@ -187,14 +187,14 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
-    KPLog(@"连接失败:%@",peripheral);
+//    KPLog(@"连接失败:%@",peripheral);
 }
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     KPHandheldDevice *device = [self.connectRecords objectForKey:peripheral.identifier];
     if (!device || error) { return; }
     device.state = DeviceState_Discovered;
-    KPLog(@"成功断开连接");
+//    KPLog(@"成功断开连接");
     [self notifyDelegateOfDisconnectHandheld:device error:error];
 }
 
@@ -217,18 +217,18 @@
     }
 }
 
-// 从delegate返回的数据配置`KPHandleheldDevice`
+// 从delegate返回的数据配置`KPHandheldDevice`
 - (KPHandheldDevice *)getDeviceFromCBPerpheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary <NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
     KPHandheldDevice *device;
     // 已经被发现的设备, 准备连接
     if ((device = [self.connectRecords objectForKey:peripheral.identifier])) {
-        KPLog(@"发现连接过的设备:%@",peripheral.identifier);
+//        KPLog(@"发现连接过的设备:%@",peripheral.identifier);
         device.lastDiscovered = [NSDate date];
         device.RSSI = RSSI;
         device.advertisementData = advertisementData;
     } else {
         // 之前未被发现的新设备
-        KPLog(@"发现新设备:%@",peripheral.identifier);
+//        KPLog(@"发现新设备:%@",peripheral.identifier);
         device = [[KPHandheldDevice alloc] initWithPeripheral:peripheral];
         device.RSSI = RSSI;
         device.lastDiscovered = [NSDate date];

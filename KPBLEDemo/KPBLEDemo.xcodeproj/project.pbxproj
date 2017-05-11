@@ -13,12 +13,21 @@
 		096937071EC028AB002304BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 096937051EC028AB002304BA /* Main.storyboard */; };
 		096937091EC028AB002304BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 096937081EC028AB002304BA /* Assets.xcassets */; };
 		0969370C1EC028AB002304BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0969370A1EC028AB002304BA /* LaunchScreen.storyboard */; };
-		096937161EC05310002304BA /* KPHandheldManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 096937151EC05310002304BA /* KPHandheldManager.m */; };
-		096937191EC05C29002304BA /* KPBTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 096937181EC05C29002304BA /* KPBTHelper.m */; };
-		0969371C1EC05DDF002304BA /* KPBLEDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0969371B1EC05DDF002304BA /* KPBLEDevice.m */; };
-		0969371F1EC06B8C002304BA /* KPHandheldDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0969371E1EC06B8C002304BA /* KPHandheldDevice.m */; };
-		096937291EC2EB6D002304BA /* KPGattSerialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 096937281EC2EB6D002304BA /* KPGattSerialProfile.m */; };
+		0983505B1EC444DC00844D31 /* KPBle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0983505A1EC444DC00844D31 /* KPBle.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		096937781EC41EF9002304BA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		096936F91EC028AB002304BA /* KPBLEDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPBLEDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -31,20 +40,9 @@
 		096937081EC028AB002304BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0969370B1EC028AB002304BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0969370D1EC028AB002304BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		096937141EC05310002304BA /* KPHandheldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPHandheldManager.h; sourceTree = "<group>"; };
-		096937151EC05310002304BA /* KPHandheldManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPHandheldManager.m; sourceTree = "<group>"; };
-		096937171EC05C29002304BA /* KPBTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBTHelper.h; sourceTree = "<group>"; };
-		096937181EC05C29002304BA /* KPBTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPBTHelper.m; sourceTree = "<group>"; };
-		0969371A1EC05DDF002304BA /* KPBLEDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBLEDevice.h; sourceTree = "<group>"; };
-		0969371B1EC05DDF002304BA /* KPBLEDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPBLEDevice.m; sourceTree = "<group>"; };
-		0969371D1EC06B8C002304BA /* KPHandheldDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPHandheldDevice.h; sourceTree = "<group>"; };
-		0969371E1EC06B8C002304BA /* KPHandheldDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPHandheldDevice.m; sourceTree = "<group>"; };
 		096937201EC082AE002304BA /* KPBLEDemo-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KPBLEDemo-prefix.pch"; sourceTree = "<group>"; };
 		096937221EC08484002304BA /* KPBLEDemoGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBLEDemoGlobal.h; sourceTree = "<group>"; };
-		096937241EC160D0002304BA /* KPHandheldDevice+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KPHandheldDevice+Protected.h"; sourceTree = "<group>"; };
-		096937271EC2EB6D002304BA /* KPGattSerialProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPGattSerialProfile.h; sourceTree = "<group>"; };
-		096937281EC2EB6D002304BA /* KPGattSerialProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPGattSerialProfile.m; sourceTree = "<group>"; };
-		0969372B1EC2F330002304BA /* KPPeripheralProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPPeripheralProtocol.h; sourceTree = "<group>"; };
+		0983505A1EC444DC00844D31 /* KPBle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KPBle.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0983505B1EC444DC00844D31 /* KPBle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,18 +103,7 @@
 		096937131EC04FBB002304BA /* KPBTStocktaking */ = {
 			isa = PBXGroup;
 			children = (
-				096937141EC05310002304BA /* KPHandheldManager.h */,
-				096937151EC05310002304BA /* KPHandheldManager.m */,
-				096937241EC160D0002304BA /* KPHandheldDevice+Protected.h */,
-				0969372B1EC2F330002304BA /* KPPeripheralProtocol.h */,
-				096937271EC2EB6D002304BA /* KPGattSerialProfile.h */,
-				096937281EC2EB6D002304BA /* KPGattSerialProfile.m */,
-				0969371D1EC06B8C002304BA /* KPHandheldDevice.h */,
-				0969371E1EC06B8C002304BA /* KPHandheldDevice.m */,
-				0969371A1EC05DDF002304BA /* KPBLEDevice.h */,
-				0969371B1EC05DDF002304BA /* KPBLEDevice.m */,
-				096937171EC05C29002304BA /* KPBTHelper.h */,
-				096937181EC05C29002304BA /* KPBTHelper.m */,
+				0983505A1EC444DC00844D31 /* KPBle.framework */,
 			);
 			name = KPBTStocktaking;
 			sourceTree = "<group>";
@@ -130,6 +118,7 @@
 				096936F51EC028AB002304BA /* Sources */,
 				096936F61EC028AB002304BA /* Frameworks */,
 				096936F71EC028AB002304BA /* Resources */,
+				096937781EC41EF9002304BA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -192,13 +181,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				096937191EC05C29002304BA /* KPBTHelper.m in Sources */,
-				096937161EC05310002304BA /* KPHandheldManager.m in Sources */,
 				096937041EC028AB002304BA /* ViewController.m in Sources */,
 				096937011EC028AB002304BA /* AppDelegate.m in Sources */,
-				096937291EC2EB6D002304BA /* KPGattSerialProfile.m in Sources */,
-				0969371F1EC06B8C002304BA /* KPHandheldDevice.m in Sources */,
-				0969371C1EC05DDF002304BA /* KPBLEDevice.m in Sources */,
 				096936FE1EC028AB002304BA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +304,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9ZNSMFJB3R;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KPBLEDemo",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KPBLEDemo/KPBLEDemo-prefix.pch";
 				INFOPLIST_FILE = KPBLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -334,6 +322,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9ZNSMFJB3R;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KPBLEDemo",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KPBLEDemo/KPBLEDemo-prefix.pch";
 				INFOPLIST_FILE = KPBLEDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -362,6 +354,7 @@
 				096937121EC028AB002304BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

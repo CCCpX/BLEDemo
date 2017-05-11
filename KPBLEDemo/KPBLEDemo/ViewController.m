@@ -7,8 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KPHandheldManager.h"
-#import "KPHandheldDevice.h"
+#import <KPBle/KPBle.h>
 
 @interface ViewController ()<KPHandheldManagerDelegate, KPHandheldDeviceDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -63,12 +62,20 @@ static NSString * const cellReuseIdentifier = @"cellReuseIdentifier";
     [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
 }
 - (void)handheldManager:(KPHandheldManager *)hhManager didDiscoverHandheld:(KPHandheldDevice *)handheld error:(NSError*)error{
-//    [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
-    [self.foundDevices addObject:handheld];
+    if (self.foundDevices.count > 0) {
+        for (KPHandheldDevice *device in self.foundDevices) {
+            if (![device isEqual:handheld]) {
+                [self.foundDevices addObject:handheld];
+            }
+        }
+    } else {
+        [self.foundDevices addObject:handheld];
+    }
     [self.tableView reloadData];
 }
 - (void)handheldManager:(KPHandheldManager *)hhManager didConnectHandheld:(KPHandheldDevice *)handheld error:(NSError *)error {
     self.handheldDevice = handheld;
+    self.handheldDevice.delegate = self;
     [self writeToLog:[NSString stringWithFormat:@"%s",__PRETTY_FUNCTION__]];
 }
 - (void)handheldManager:(KPHandheldManager *)hhManager didDisconnectHandheld:(KPHandheldDevice *)handheld error:(NSError *)error {
@@ -77,7 +84,8 @@ static NSString * const cellReuseIdentifier = @"cellReuseIdentifier";
 
 #pragma mark - KPHandheldDeviceDelegate
 - (void)handheld:(KPHandheldDevice *)device receiveSerialData:(NSData *)data {
-    KPLog(@"接收到数据:%@",data);
+    [self writeToLog:[NSString stringWithFormat:@"%@",data]];
+    KPLog(@"接收到数据:%s",[data bytes]);
 }
 
 - (void)writeToLog:(NSString *)log {

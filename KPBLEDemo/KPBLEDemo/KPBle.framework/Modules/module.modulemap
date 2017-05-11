@@ -1,0 +1,6 @@
+framework module KPBle {
+  umbrella header "KPBle.h"
+
+  export *
+  module * { export * }
+}

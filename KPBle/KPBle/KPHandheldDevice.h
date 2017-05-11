@@ -77,5 +77,6 @@ typedef NS_ENUM(NSInteger, KPHandheldDeviceState) {
 
 @protocol KPHandheldDeviceDelegate <NSObject>
 - (void)handheld:(KPHandheldDevice *)device receiveSerialData:(NSData *)data;
+@optional
 - (void)handheldDidUpdateRSSI:(KPHandheldDevice *)device error:(NSError *)error;
 @end

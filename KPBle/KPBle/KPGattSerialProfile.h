@@ -10,8 +10,9 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "KPPeripheralProtocol.h"
 
-#define GLOBAL_SERIAL_PASS_SERVICE_UUID @"FFE0"
-#define GLOBAL_SERIAL_PASS_CHARACTERISTIC_UUID @"FFE2"
+#define GLOBAL_SERIAL_SERVICE_UUID @"FFE0"
+#define GLOBAL_SERIAL_READ_UUID @"FFE1"
+#define GLOBAL_SERIAL_WRITE_UUID @"FFE2"
 
 @protocol KPGattSerialProfileDelegate;
 @interface KPGattSerialProfile : NSObject
